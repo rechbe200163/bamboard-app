@@ -37,6 +37,13 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "3c79be19-b1a2-43ab-8c43-c55d1623b52b"
+      }
+    },
+    "owner": "mrechberger005-org"
   }
 }
