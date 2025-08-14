@@ -1,13 +1,19 @@
 import { games } from '@/lib/mock-data/games';
 import React from 'react';
-import { ImageBackground, StyleSheet, Text, View } from 'react-native';
+import {
+  ImageBackground,
+  StyleSheet,
+  Text,
+  useWindowDimensions,
+  View,
+} from 'react-native';
 import Carousel from 'react-native-reanimated-carousel';
 
 const gameImages: Record<string, any> = {
-  'chess.jpg': require('@/assets/chess.jpg'),
-  'hit-8.jpg': require('@/assets/hit-8.jpg'),
-  'beer-pong.jpg': require('@/assets/beer-pong.jpg'),
-  'mensch-aergere-dich-nicht.jpg': require('@/assets/mensch-aergere-dich-nicht.jpg'),
+  'beer-pong.jpg': require('@/assets/images/games/beer-pong.jpg'),
+  'chess.jpg': require('@/assets/images/games/chess.jpg'),
+  'hit-8.jpg': require('@/assets/images/games/hit-8.jpg'),
+  'mensch-aergere-dich-nicht.jpg': require('@/assets/images/games/mensch-aerger-dich-nicht.jpg'),
 };
 
 function renderItem({
@@ -22,24 +28,30 @@ function renderItem({
   style?: object;
 }) {
   return (
-    <ImageBackground src={gameImages[item.imagePath]}>
-      <Text>{item.title}</Text>
-    </ImageBackground>
+    <View>
+      <ImageBackground
+        source={gameImages[item.imagePath]}
+        style={styles.carouselImage}
+      >
+        <Text style={styles.carouselText}>{item.title}</Text>
+        <Text style={styles.carouselTextDescription}>{item.description}</Text>
+      </ImageBackground>
+    </View>
   );
 }
 
 const GamesCarousel = () => {
+  const { width, height } = useWindowDimensions();
   return (
     <View id='carousel-component'>
       <Carousel
         loop={true}
-        width={430}
-        height={258}
+        width={width}
+        height={height}
         snapEnabled={true}
         pagingEnabled={true}
         autoPlayInterval={2000}
         data={games}
-        style={{ width: '100%' }}
         onSnapToItem={(index) => console.log('current index:', index)}
         renderItem={({ item, index }) =>
           renderItem({ item, index, rounded: true })
@@ -51,4 +63,34 @@ const GamesCarousel = () => {
 
 export default GamesCarousel;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  carouselContainer: {
+    flex: 1,
+  },
+  carouselItem: {
+    height: '100%',
+    width: '100%',
+  },
+  carouselImage: {
+    width: '100%',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  carouselText: {
+    color: 'white',
+    fontSize: 24,
+    shadowColor: 'black',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+  },
+  carouselTextDescription: {
+    color: 'white',
+    fontSize: 16,
+    shadowColor: 'black',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.5,
+    shadowRadius: 1,
+  },
+});
