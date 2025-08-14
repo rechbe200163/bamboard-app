@@ -1,18 +1,11 @@
-import {
-  DarkTheme,
-  DefaultTheme,
-  ThemeProvider,
-} from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import 'react-native-reanimated';
 
-import { useColorScheme } from '@/hooks/useColorScheme';
 import React from 'react';
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
   const [loaded] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
   });
@@ -24,7 +17,9 @@ export default function RootLayout() {
 
   return (
     <React.Fragment>
-      <Stack />;
+      <Stack>
+        <Stack.Screen name='index' options={{ headerShown: false }} />;
+      </Stack>
       <StatusBar style='auto' />
     </React.Fragment>
   );
